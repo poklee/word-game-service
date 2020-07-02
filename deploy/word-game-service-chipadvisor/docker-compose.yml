@@ -24,7 +24,7 @@ services:
     expose:
       - 10043
     volumes:
-      - "/var/lib/mysql-word-game-service-tivo:/var/lib/mysql"
+      - "/var/lib/mysql-word-game-service-chipadvisor:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
