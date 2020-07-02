@@ -1,0 +1,58 @@
+<project name="Nerdbot for Tivo" default="about">
+
+	<property environment="env" />
+
+	<target name="about">
+		<echo>About ${ant.project.name}</echo>
+		<echo>Base Dir: ${basedir}</echo>
+		<echo>-----------------------------------------------</echo>
+		<exec executable="docker-compose">
+			<arg value="--version" />
+		</exec>
+
+		<echo>-----------------------------------------------</echo>
+		<exec executable="docker">
+			<arg value="--version" />
+		</exec>
+	</target>
+
+	<target name="check-dependency">
+	</target>
+
+	<target name="start">
+		<echo>Starting ${ant.project.name}</echo>
+		<antcall target="docker-compose-build" />
+		<antcall target="docker-compose-up" />
+		<echo>Docker PS log</echo>
+		<exec executable="docker">
+			<arg value="ps" />
+		</exec>
+	</target>
+
+	<target name="stop">
+		<antcall target="docker-compose-down" />
+	</target>
+
+	<target name="docker-compose-build">
+		<exec executable="docker-compose" failonerror="true">
+			<arg value="--no-ansi" />
+			<arg value="build" />
+		</exec>
+	</target>
+
+	<target name="docker-compose-up">
+		<!-- Docker compose up -->
+		<exec executable="docker-compose" failonerror="true">
+			<arg value="--no-ansi" />
+			<arg value="up" />
+			<arg value="-d" />
+		</exec>
+	</target>
+
+	<target name="docker-compose-down">
+		<!-- Docker compose down -->
+		<exec executable="docker" failonerror="true">
+			<arg value="ps" />
+		</exec>
+	</target>
+</project>

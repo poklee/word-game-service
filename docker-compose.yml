@@ -1,0 +1,19 @@
+# https://docs.docker.com/compose/compose-file
+version: '3.1'
+
+services:
+  mysql:
+    build:
+      context: ./database
+      dockerfile: dockerfile
+    ports:
+      - 10041:3306
+    expose:
+      - 10041
+    volumes:
+      - "/var/lib/mysql-word-game-service:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: database

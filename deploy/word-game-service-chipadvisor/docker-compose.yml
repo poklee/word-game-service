@@ -1,0 +1,32 @@
+# https://docs.docker.com/compose/compose-file
+version: '3.1'
+
+services:
+  backend:
+    build:
+      context: ../../
+      dockerfile: dockerfile
+    ports:
+      - 10042:8080
+    expose:
+      - 10042
+    tty: true
+    environment:
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/database
+  mysql:
+    build:
+      context: ../../database
+      dockerfile: dockerfile
+    ports:
+      - 10043:3306
+    expose:
+      - 10043
+    volumes:
+      - "/var/lib/mysql-word-game-service-tivo:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: database
